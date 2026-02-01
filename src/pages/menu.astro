@@ -1,0 +1,33 @@
+---
+import Layout from "./layouts/Layout.astro";
+import { weeklyMenu, drinks } from "../data/menu";
+---
+<Layout title="Menu">
+  <section class="p-6 space-y-8">
+    {Object.entries(weeklyMenu).map(([day, items]) => (
+      <div>
+        <h2 class="text-xl font-bold">{day}</h2>
+        <ul class="mt-2 space-y-1">
+          {items.map(item => (
+            <li class="flex justify-between">
+              <span>{item.name}</span>
+              <span>₹{item.price}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+
+    <div>
+      <h2 class="text-xl font-bold">Drinks (Every Day)</h2>
+      <ul class="mt-2 space-y-1">
+        {drinks.map(drink => (
+          <li class="flex justify-between">
+            <span>{drink.name}</span>
+            <span>₹{drink.price}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Layout>

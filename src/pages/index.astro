@@ -1,22 +1,38 @@
 ---
-import Layout from "./layouts/Layout.astro"
-import "../styles/global.css";
----
+import Layout from "./layouts/Layout.astro";
+import { weeklyMenu } from "../data/menu";
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<Layout>
-			<section class="p-6">
-				<h1 class="text-3xl font-bold">Lu Gia</h1>
-				<p>Fresh food ~ Fast ~ Affordable</p>
-			</section>
-		</Layout>
-	</body>
-</html>
+const today = new Date().toLocaleDateString("en-US", {
+  weekday: "long",
+});
+
+// 🔒 ALWAYS an array
+const todayMenu = weeklyMenu[today] || [];
+---
+<Layout title="Lu Gia">
+  <section class="p-6 space-y-4">
+    <h1 class="text-3xl font-bold">Lu Gia</h1>
+    <p>Fresh food ~ Fast ~ Affordable</p>
+
+    <h2 class="text-xl font-semibold">
+      Today’s Menu ({today})
+    </h2>
+
+    {todayMenu.length > 0 ? (
+      <ul class="space-y-1">
+        {todayMenu.map(item => (
+          <li class="flex justify-between">
+            <span>{item.name}</span>
+            <span>₹{item.price}</span>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p class="text-sm text-gray-500">Closed today</p>
+    )}
+
+    <a href="/menu" class="font-semibold underline">
+      View Full Menu →
+    </a>
+  </section>
+</Layout>
